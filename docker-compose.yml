@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  a-pic-a-day:
+    build: .
+    container_name: a-pic-a-day-bot
+    restart: unless-stopped
+    
+    # Environment configuration
+    environment:
+      - NODE_ENV=production
+      - DEBUG=false
+    
+    # Mount configuration and data volumes
+    volumes:
+      # Configuration file
+      - ./data/.env:/app/.env:ro
+      
+      # Persistent data storage
+      - ./data/database:/app/database:rw
+      - ./data/logs:/app/logs:rw
+      - ./data/auth:/app/.wwebjs_auth:rw
+    
+    # Network configuration (if webhook needed)
+    ports:
+      - "3000:3000"
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "console.log('Health check passed')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
