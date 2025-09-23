@@ -227,7 +227,7 @@ After starting the bot (either via npm or Docker), you need to register it with 
 
 ### 📝 Important Notes
 
-- **Dedicated Phone Required**: Use a separate WhatsApp account/phone number for the bot.
+- **Dedicated Account**: Use a separate WhatsApp account/phone number for the bot (preferred)
 - **Keep Session Active**: The bot will remember the login session across restarts
 - **Authentication Files**: Session data is stored in `.wwebjs_auth/` (regular) or `data/auth/` (Docker)
 - **Re-authentication**: If the QR code appears again, your session expired - simply scan again
