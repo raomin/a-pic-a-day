@@ -636,7 +636,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Claude did most of it. Thanks.
+This project is built with:
+
+### Core Dependencies
+- **[whatsapp-web.js](https://wwebjs.dev/)** - WhatsApp Web API client for Node.js
+- **[sqlite3](https://github.com/TryGhost/node-sqlite3)** - SQLite database driver for reliable data persistence
+- **[node-cron](https://github.com/node-cron/node-cron)** - Task scheduler for automated daily operations
+- **[winston](https://github.com/winstonjs/winston)** - Professional logging library with multiple transports
+- **[dotenv](https://github.com/motdotla/dotenv)** - Environment variable management
+- **[qrcode-terminal](https://github.com/gtanner/qrcode-terminal)** - QR code generation for WhatsApp authentication
+
+### Special Thanks
+- **Claude** - AI assistant that helped architect and develop most of this project
 
 ## 📞 Support
 
