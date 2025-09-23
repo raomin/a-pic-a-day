@@ -1,58 +1,38 @@
-# ==============================================================================node_modules/
+# ==============================================================================
+# A Pic a Day Bot - Git Ignore File
+# ==============================================================================
 
-# A Pic a Day Bot - Git Ignore File.env
+# Node.js Dependencies
+node_modules/
 
-# ==============================================================================.wwebjs_auth/
-
-.wwebjs_cache/
-
-# ==============================================================================*.log
-
-# Environment and Configurationdatabase.db
-
-# ==============================================================================.DS_Store
-
-.envsession/
+# Environment Configuration
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# ==============================================================================
+# WhatsApp Web.js Authentication & Cache
+.wwebjs_auth/
+.wwebjs_cache/
+session/
+session.json
+
 # Database Files
-# ==============================================================================
 *.db
 *.sqlite
 *.sqlite3
 database.db
 *.db-journal
 
-# ==============================================================================
 # Logs
-# ==============================================================================
 logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-
-# ==============================================================================
-# Node.js Dependencies
-# ==============================================================================
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 .pnpm-debug.log*
-
-# ==============================================================================
-# WhatsApp Web Session Data
-# ==============================================================================
-.wwebjs_auth/
-.wwebjs_cache/
-session.json
-session/
 
 # ==============================================================================
 # Operating System Files
