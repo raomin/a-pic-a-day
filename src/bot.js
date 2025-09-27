@@ -100,7 +100,7 @@ class APicADayBot {
 
     async handleGroupMessage(message, contact) {
         const userId = contact.id._serialized;
-        const hasImage = message.hasMedia && message.type === 'image';
+        const hasMedia = message.hasMedia && (message.type === 'image' || message.type === 'video');
         const messageText = message.body.toLowerCase().trim();
         
         // Handle bot commands in group
@@ -109,12 +109,14 @@ class APicADayBot {
             return;
         }
         
-        if (hasImage) {
+        if (hasMedia) {
             await this.submissionService.recordSubmission(userId, contact.pushname || contact.number);
-            logger.info(`Picture submission recorded for ${contact.pushname || contact.number}`);
+            const mediaType = message.type === 'video' ? 'Video' : 'Picture';
+            logger.info(`${mediaType} submission recorded for ${contact.pushname || contact.number}`);
             
             // Send a confirmation reaction/message
-            await message.react('📸');
+            const emoji = message.type === 'video' ? '🎥' : '📸';
+            await message.react(emoji);
         }
     }
 
@@ -130,7 +132,7 @@ class APicADayBot {
         }
         
         // Check if user is removed and trying to re-enter
-        if (user && user.status === 'removed' && message.hasMedia && message.type === 'image') {
+        if (user && user.status === 'removed' && message.hasMedia && (message.type === 'image' || message.type === 'video')) {
             await this.processReentrySubmission(message, contact);
         } else if (!user || user.status !== 'removed') {
             // Send instructions to active users who message the bot
@@ -344,14 +346,14 @@ class APicADayBot {
         helpMessage += `• \`/help\` or \`!help\` - Show help message\n\n`;
         
         helpMessage += `📸 *How it works:*\n`;
-        helpMessage += `• Post 1 picture daily before ${config.DAILY_DEADLINE_HOUR}:${config.DAILY_DEADLINE_MINUTE.toString().padStart(2, '0')}\n`;
+        helpMessage += `• Post 1 picture or video daily before ${config.DAILY_DEADLINE_HOUR}:${config.DAILY_DEADLINE_MINUTE.toString().padStart(2, '0')}\n`;
         helpMessage += `• Miss a day? You'll be removed automatically\n`;
-        helpMessage += `• Send a picture to this bot privately to rejoin\n\n`;
+        helpMessage += `• Send a picture or video to this bot privately to rejoin\n\n`;
         
         helpMessage += `💡 *Tips:*\n`;
-        helpMessage += `• Pictures must be images (not documents)\n`;
+        helpMessage += `• Media must be images or videos (not documents)\n`;
         helpMessage += `• One submission per day counts\n`;
-        helpMessage += `• Bot reactions confirm your submission 📸\n\n`;
+        helpMessage += `• Bot reactions confirm your submission 📸🎥\n\n`;
         
         helpMessage += `Have fun sharing your daily moments! 📱✨`;
         
@@ -380,7 +382,7 @@ class APicADayBot {
                     infoMessage += `📅 *Last submission:* ${new Date(user.last_submission).toLocaleDateString()}\n`;
                 }
             } else {
-                infoMessage += `ℹ️ No data found. Send a picture to get started!`;
+                infoMessage += `ℹ️ No data found. Send a picture or video to get started!`;
             }
             
             await message.reply(infoMessage);
@@ -411,7 +413,8 @@ class APicADayBot {
             await this.submissionService.recordSubmission(userId, contact.pushname || contact.number);
             
             // Send confirmation
-            await message.reply('✅ Your picture has been posted to the group and you have been re-invited!');
+            const mediaType = message.type === 'video' ? 'video' : 'picture';
+            await message.reply(`✅ Your ${mediaType} has been posted to the group and you have been re-invited!`);
             
             logger.info(`Re-entry processed for ${contact.pushname || contact.number}`);
         } catch (error) {
@@ -427,9 +430,9 @@ class APicADayBot {
 This bot manages daily picture sharing groups for friends and family.
 
 📋 *Rules:*
-• Post one picture per day before ${config.DAILY_DEADLINE_HOUR}:${config.DAILY_DEADLINE_MINUTE.toString().padStart(2, '0')}
+• Post one picture or video per day before ${config.DAILY_DEADLINE_HOUR}:${config.DAILY_DEADLINE_MINUTE.toString().padStart(2, '0')}
 • If you miss a day, you'll be removed from the group
-• Send a picture directly to this bot to rejoin
+• Send a picture or video directly to this bot to rejoin
 
 💡 *Commands:*
 • \`/myinfo\` - Check your submission status and stats
@@ -438,7 +441,7 @@ This bot manages daily picture sharing groups for friends and family.
 • \`!stats\` - View submission statistics
 
 📸 *Tips:*
-• Pictures must be sent as images, not documents
+• Media must be sent as images or videos, not documents
 • Bot will react with 📸 when your submission is recorded
 • You can check group status anytime with \`!status\`
 
@@ -515,10 +518,10 @@ Have a great day! 📸✨
                     await contactChat.sendMessage(`
 😔 *Oh no! You've been removed from the group*
 
-📸 *Reason:* No picture posted today
+📸 *Reason:* No picture or video posted today
 
 🔄 *To rejoin:*
-• Send any picture directly to this bot
+• Send any picture or video directly to this bot
 • You'll be automatically re-invited!
 
 Don't forget - one picture per day keeps you in the group! 📱✨
