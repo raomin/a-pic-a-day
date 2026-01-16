@@ -71,7 +71,7 @@ The bot requires a **separate WhatsApp account** from your personal one. Here's 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/a-pic-a-day.git
+   git clone https://github.com/raomin/a-pic-a-day.git
    cd a-pic-a-day
    ```
 
@@ -113,7 +113,7 @@ The bot requires a **separate WhatsApp account** from your personal one. Here's 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/a-pic-a-day.git
+   git clone https://github.com/raomin/a-pic-a-day.git
    cd a-pic-a-day
    ```
 
@@ -441,7 +441,7 @@ For containerized production deployment:
 
 ```bash
 # Clone and setup
-git clone https://github.com/your-username/a-pic-a-day.git
+git clone https://github.com/raomin/a-pic-a-day.git
 cd a-pic-a-day
 ./docker-setup.sh
 
@@ -654,7 +654,7 @@ This project is built with:
 If you encounter issues or have questions:
 
 1. Check the [troubleshooting section](#-troubleshooting)
-2. Review the [issues page](https://github.com/your-username/a-pic-a-day/issues)
+2. Review the [issues page](https://github.com/raomin/a-pic-a-day/issues)
 3. Create a new issue with detailed information
 
 ---
